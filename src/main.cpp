@@ -38,6 +38,11 @@ float checkIntValue(char* val){
         }
         else return number;
     }
+    else if (number < 0) {
+        cout << "Numbers cannot be smaller than zero! " << endl;
+        help();
+        exit(0);
+    }
     else return number;
 }
 
@@ -61,6 +66,15 @@ void input(int argc, char* argv[]) {
             if(argc == 5) {
                 CImg<int> img("../src/pentagon.bmp");
                 img.save("original.bmp");                   //saving an image in folder "../out"
+
+                if (img(x,y) - t < 0 || img(x,y) + t > 255) {
+                    cout << "Value of threshold is too high for this pixel!" << endl;
+                    exit(0);
+                }
+                else if (x > img.width() || y > img.height()) {
+                    cout << "Coordinates are too high!" << endl;
+                    exit(0);
+                }
                 img = rgrow(img, x,y,t);                    //implementing the function
                 img.save("modified.bmp");                   //saving the resultant image in folder "../out"
             }
